@@ -94,9 +94,52 @@ function addRole () {
         salary: data.addSalary,
         department_id: department.id
       })
+      
       init()
     })
   })
 }
+
+function addEmployee () {
+  connection.query('select * from department', (err, res) => {
+    inquirer.prompt([
+      {
+        type: 'input',
+        message: 'What is their first name??',
+        name: 'first_name'
+      },
+      {
+        type: 'input',
+        message: 'What is their last name?',
+        name: 'last_name'
+      },
+      {
+        type: 'list',
+        message: 'What is their role?',
+        name: 'role_id',
+        choices: ['Salesperson', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead', ' Lawyer']
+      },
+      {
+        type: 'list',
+        message: 'Who is their manager?',
+        name: 'manager_id',
+        choices: ['Sarah Paulson', 'Evan Peters', 'Jessica Lang'] 
+      },
+    ]) .then (data => {
+      connection.query()
+      let employee = res.find(employee => employee.employee === data.addEmployee)
+      connection.query('insert into employee set ?', {
+        firstName: data.first_name,
+        lastName: data.last_name,
+        manager_id: '',
+      })
+      
+      init()
+})
+
+}
+)}
+
+
 
 init();
